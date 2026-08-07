@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rossini Admin</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f5f5f5;padding:24px}
+.box{max-width:420px;margin:auto;background:#fff;padding:24px;border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+input,button{width:100%;padding:12px;margin-top:12px;border-radius:10px;border:1px solid #ddd}
+button{background:#111;color:#fff;border:none;font-weight:bold}
+</style>
+</head>
+<body>
+<div class="box">
+<h2>Admin Login</h2>
+<input id="email" type="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
+<p id="status"></p>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCvLtUCpKWhVeMh7QcbrlJZpvtAPAIplXo",
+  authDomain: "ristorante-rossini.firebaseapp.com",
+  projectId: "ristorante-rossini",
+  storageBucket: "ristorante-rossini.firebasestorage.app",
+  messagingSenderId: "886098533105",
+  appId: "1:886098533105:web:6528ce9772520d02b4e750"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.login = async function(){
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const status = document.getElementById('status');
+  try{
+    await signInWithEmailAndPassword(auth, email, password);
+    status.textContent = "Login successful";
+  }catch(e){
+    status.textContent = e.message;
+  }
+}
+</script>
+</body>
+</html>
